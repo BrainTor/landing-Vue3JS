@@ -27,7 +27,7 @@
 
         <div class="have_a_question">
             <p style="font-size: 20px; font-weight: 580;">Остальсь вопросы?</p>
-            <button class="connect_button">Свяжитесь со мной</button>
+            <button class="connect_button"><fa icon="link" /> Свяжитесь со мной</button>
         </div>
     </div>
 </template>
@@ -41,7 +41,7 @@ export default{
 <style scoped>
 .footer_container{
     width: 100%;
-    background-color:black;
+    background-color:var(--background_nav_bar);
     color: white;
     font-family: "PT Serif", serif;
     padding-top: 60px;
@@ -104,7 +104,8 @@ export default{
         animation-timing-function: ease-in-out;
     }
     .connect_button:hover{
-        background-color: var(--main-color);
+        background-color:  #d43a63 ;
+        color: white;
     
     }
 
@@ -121,6 +122,8 @@ export default{
     transition: 0.6s all;
     padding: 7px 12px;
     border-radius: 8px;
+    background-color: transparent ;
+   
   }
 
 </style>

@@ -7,6 +7,8 @@ library.add(fas)
 
 
 import App from './App.vue'
+import router from '@/Router'
 
 createApp(App).component('fa',FontAwesomeIcon )
+.use(router)
 .mount('#app')

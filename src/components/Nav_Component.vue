@@ -1,17 +1,42 @@
 <template>
-    <div class="nav_bar">
+    <div class="nav_bar" v-if="this.what_display">
         <div class="logo" >
             <img src="../assets/img/logo.png" style="width: 40px;" alt="">
             <p class="logo_text">Silver-tech</p>
         </div>
 
         <div class="info">
-            <button class="button_info" @click="handle_change('_about')"><fa icon="circle-info" /> Обо мне</button>
+            <button class="button_info" @click="handle_change('_about')"><fa icon="circle-info" style="margin-right: 1px;"/> Обо мне</button>
             <button class="button_info" @click="handle_change('_study')"><fa icon="book" /> Обучение</button>
             <button class="button_info" @click="handle_change('_code')"><fa icon="code" /> Разработка</button>
             <button class="button_info button_contact" @click="handle_change('_contact')"><fa icon="address-book" /> Контакты</button>
         </div>
     </div>
+
+    <div class="nav_bar" v-else>
+        <div class="logo" >
+            <img src="@/assets/img/logo.png" style="width: 40px;" alt="">
+            <p class="logo_text">Silver-tech</p>
+        </div>
+
+        <div class="info">
+            <router-link to="/">
+                <button class="button_info"><fa icon="house"  style="margin-right: 3px; margin-top: -20px;" />На главную</button>
+            </router-link>
+            
+            <router-link to="/study">
+                <button class="button_info"><fa icon="book" /> Обучение</button>
+            </router-link>
+
+            <router-link to = "/code">
+                <button class="button_info"><fa icon="code" /> Разработка</button>
+            </router-link>
+
+          
+            <button class="button_info button_contact" @click="handle_change('_contact')"><fa icon="address-book" /> Контакты</button>
+        </div>
+    </div>
+
 </template>
 
 <script>
@@ -20,6 +45,14 @@ export default {
     methods:{
         handle_change(name){
             this.$emit('scroll_to', name);
+        }
+    },props:{
+        place:String
+    },beforeMount(){
+        if(this.place != 'main') this.what_display = false
+    },data(){
+        return {
+            what_display:true
         }
     }
 }
