@@ -1,6 +1,6 @@
 <template>
 
-    <div class="modal-container" v-if="isVisible_ads">
+    <div class="modal-container" ref="main_el" v-if="isVisible_ads">
         <div class="modal-overlay" @click="closeModal"></div>
         <div class="modal-content">
             <button class="close-btn" @click="closeModal">&times;</button>
@@ -11,15 +11,18 @@
             <center>
                 <slot></slot>
             </center>
-         
+
             <div style="display: flex; flex-direction: column; align-items:center;">
                 <input type="text" class="input_two_row" placeholder="+7 909 000 00 00" style="margin-top: 10px;">
                 <button class="accept">Отправить</button>
-                <p style="text-decoration: underline; cursor: pointer;" @click="closeModal">Нет, спасибо, я хочу полную стоимость</p>
+                <p style="text-decoration: underline; cursor: pointer;" @click="closeModal">Нет, спасибо, я хочу полную
+                    стоимость</p>
             </div>
 
         </div>
     </div>
+
+
 
 </template>
 
@@ -36,14 +39,31 @@ export default {
         closeModal() {
             this.$emit('close_ads');
         }
+    },
+    data() {
+        return {
+            handleEscapeKey: null
+        }
+    },
+    mounted() {
+        this.handleEscapeKey = (event) => {
+            if (this.$refs.main_el != undefined)
+                if (event.key === 'Escape')
+                    this.$emit('close_ads');
+        }
+        window.addEventListener('keydown', this.handleEscapeKey);
+    },
+    beforeUnmount() {
+        window.removeEventListener('keydown',  this.handleEscapeKey);
     }
+
 }
 </script>
 
 <style scoped>
-.accept{
+.accept {
     width: 96%;
-    padding:  4px 10px;
+    padding: 4px 10px;
     margin-top: 20px;
     margin-bottom: 20px;
     background-color: #d43a63;
@@ -55,7 +75,8 @@ export default {
     transition: 0.6s;
     border-radius: 7px;
 }
-.accept:hover{
+
+.accept:hover {
     transform: scale(1.02);
 }
 </style>
