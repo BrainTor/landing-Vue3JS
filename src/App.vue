@@ -39,7 +39,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgb(57, 55, 55);
+  background-color: rgb(30, 29, 29);
 }
 
 </style>

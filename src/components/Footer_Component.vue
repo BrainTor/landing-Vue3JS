@@ -12,13 +12,21 @@
             
                 <div class="social_row">
                     <button class="social_button">
-                        <img class="social_img" src="@/assets/img/icons/vk.png">
+                        <a href="https://vk.com/maxim295">
+                            <img class="social_img" src="@/assets/img/icons/vk.png">
+                        </a>
+
                     </button>
                     <button class="social_button">
-                        <img class="social_img" src="@/assets/img/icons/telegram.png">
+                        <a href="https://t.me/@BrainTorOff">
+                            <img class="social_img" src="@/assets/img/icons/telegram.png">
+                        </a>
+                        
                     </button>
                     <button class="social_button" title="Запрещенная на территории РФ соц. сеть  :)">
-                        <img class="social_img" src="@/assets/img/icons/instagram.png">
+                        <a href="https://www.instagram.com/prophet_off?igsh=MTBnZW9zdjZkbmhyNw==">
+                            <img class="social_img" src="@/assets/img/icons/instagram.png">
+                        </a>
                     </button>
                 </div>
       
@@ -27,14 +35,18 @@
 
         <div class="have_a_question">
             <p style="font-size: 20px; font-weight: 580;">Остальсь вопросы?</p>
-            <button class="connect_button"><fa icon="link" /> Свяжитесь со мной</button>
+            <button class="connect_button" @click="open_m"><fa icon="link" /> Свяжитесь со мной</button>
         </div>
     </div>
 </template>
 
 <script>
 export default{
-    name:'Footer_Component'
+    name:'Footer_Component',methods:{
+        open_m(){
+            this.$emit('toggle')
+        }
+    }
 }
 </script>
 

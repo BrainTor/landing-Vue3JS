@@ -1,12 +1,18 @@
 <template>
     <div>
-        <Nav_Component place="study"></Nav_Component>
-        <center>
-            
-        </center>
-        
+        <Nav_Component @scroll_to = "handle_scroll" place="study"></Nav_Component>
+
+        <Modal_ads @close_ads = "hadle_ads" :isVisible_ads = "is_Visible_ads">
+            <p style="font-size: 16.5px; margin-top: 10px;margin-bottom: 10px;">Напишите ваш, номер телефона и получите скидку<br>на первое занятие в размере 15% <br>
+            И пробное занятие <strong>бесплатно</strong> 
+            </p>
+        </Modal_ads>
+    
         <section style="padding: 20px;">
-            <Back_Button ></Back_Button>
+            <RouterLink to = '/'>
+                <Back_Button ></Back_Button>
+            </RouterLink> 
+        
             <div class="profile-card">
                 
                 <img src="@/assets/img/study/enter.jpg" alt="Profile Photo" class="profile-photo">
@@ -97,20 +103,40 @@
                 </div>
             </center>
         </section>
-        <Footer_Component></Footer_Component>
+        <div ref="section_contact">
+            <Footer_Component ></Footer_Component>
+        </div>
+        
     </div>
 </template>
 <script>
 import Footer_Component from '@/components/Footer_Component.vue';
 import Nav_Component from '@/components/Nav_Component.vue';
 import Back_Button from '@/components/UI/Back_Button.vue';
-
+import Modal_ads from '@/components/Modal_ads.vue'
 export default {
     name: 'Study_page',
     components: {
         Nav_Component,
         Footer_Component,
-        Back_Button
+        Back_Button,Modal_ads
+    }
+    ,methods : {
+        handle_scroll(data){
+            let check_el = this.$refs['section' + data]
+            if (check_el) check_el.scrollIntoView({ behavior: 'smooth' })
+        },
+        hadle_ads(){
+            this.is_Visible_ads = !this.is_Visible_ads
+        }
+    },data(){
+        return {
+            is_Visible_ads: false,
+            randomTime:  Math.round(Math.random() * (12000 - 7000) + 7000) 
+        }
+    },
+    mounted(){
+        setTimeout(this.hadle_ads,this.randomTime)
     }
 }
 </script>

@@ -1,5 +1,12 @@
 <template>
-    <Nav_Component @scroll_to="handle_nav" place="main"  class="nav_bar" />
+    <Nav_Component @scroll_to="this.handle_nav" place="main" class="nav_bar" />
+
+    <Modal_Connect :isVisible="this.isVisible" @close="this.togle_Modal">
+    
+
+    </Modal_Connect>
+
+   
     <section class="header_section">
         <img ref="img_header" src="@/assets/img/main-section.webp" class="img_undercover" alt="">
         <div class="cover">
@@ -12,6 +19,11 @@
             </h1>
         </div>
     </section>
+
+    <Modal_ads @close_ads = "hadle_ads" :isVisible_ads = "is_Visible_ads">
+        <p style="font-size: 16.5px; margin-top: 10px;margin-bottom: 10px;">Напишите ваш, номер телефона и получите скидку<br>на все услуги в размере 15 процентов</p>
+    </Modal_ads>
+
 
     <section ref="section_about" class="about-section">
 
@@ -49,7 +61,10 @@
         </div>
 
         <center>
-            <button class="connect_with_me"><fa icon="link" /> Свяжитесь со мной</button>
+
+            <button class="connect_with_me" @click="togle_Modal">
+                <fa icon="link" /> Свяжитесь со мной
+            </button>
         </center>
 
 
@@ -141,7 +156,7 @@
                 </div>
 
             </div>
-            <RouterLink to = "/study">
+            <RouterLink to="/study">
                 <Button_more></Button_more>
             </RouterLink>
 
@@ -183,16 +198,16 @@
             </div>
         </div>
         <center>
-            <RouterLink to = "/code">
+            <RouterLink to="/code">
                 <Button_more style="margin-top: 2rem;"></Button_more>
             </RouterLink>
-          
+
         </center>
 
     </section>
 
     <section ref="section_contact">
-        <Footer_Component />
+        <Footer_Component @toggle="this.togle_Modal" />
     </section>
 
 </template>
@@ -201,21 +216,28 @@
 import Footer_Component from '@/components/Footer_Component.vue';
 import Nav_Component from '@/components/Nav_Component.vue'
 import Button_more from '@/components/UI/Button_more.vue';
-
-
+import Modal_Connect from '@/components/Modal_Connect.vue';
+import Modal_ads from '@/components/Modal_ads.vue';
 export default {
     name: 'Main_Page',
     components: {
         Nav_Component,
         Footer_Component,
-        Button_more
+        Button_more,
+        Modal_Connect,Modal_ads
     },
     data() {
         return {
-            name_of: ['_about', '_why_pick_me', '_study', '_code', '_contact']
+            name_of: ['_about', '_why_pick_me', '_study', '_code', '_contact'],
+            isVisible: false,
+            is_Visible_ads:false,
+            randomTime:  Math.round(Math.random() * (22000 - 12000) + 12000) 
         }
     },
     mounted() {
+
+        setTimeout(this.hadle_ads, this.randomTime)
+
         const options = {
             root: null,
             rootMargin: '0px',
@@ -259,7 +281,14 @@ export default {
         handle_nav(data) {
             let check_el = this.$refs['section' + data]
             if (check_el) check_el.scrollIntoView({ behavior: 'smooth' })
+        },
+        togle_Modal() {
+            this.isVisible = !this.isVisible
+        },
+        hadle_ads(){
+            this.is_Visible_ads = !this.is_Visible_ads 
         }
+
     }
 }
 </script>
@@ -487,7 +516,8 @@ export default {
 .img_blocks {
     width: 180px;
 }
-.connect_with_me{
+
+.connect_with_me {
     background-color: var(--main-color);
     width: 600px;
     height: 50px;
@@ -499,9 +529,10 @@ export default {
     cursor: pointer;
 
 }
-.connect_with_me:hover{
-    background-color: rgb(30, 181, 30); 
-    color: white;  
+
+.connect_with_me:hover {
+    background-color: rgb(30, 181, 30);
+    color: white;
 
 }
 </style>
