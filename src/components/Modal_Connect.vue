@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-container" v-show="isVisible">
+    <div ref="main" class="modal-container" v-show="isVisible">
       <!-- Фон модального окна без события @click -->
       <div class="modal-overlay"></div>
       
@@ -7,41 +7,44 @@
       <div class="modal-content">
         <button class="close-btn" @click="closeModal">&times;</button>
         <h2 style="margin-bottom: 0.5rem;">Свяжитесь со мной</h2>
+        <h3 style="color:red" class="spawn" v-if="is_something_bad">Не заполнено одно из полей</h3>
         <div style="display: flex;">
             <div style="display: flex; flex-direction: column">
+              
                 <p>Введите имя</p>
            
-                <input placeholder="Иван" class="input_one_row" type="text">
+                <input placeholder="Иван" ref="name_input" class="input_one_row" type="text">
             </div>
             <div style="display: flex; flex-direction: column;margin-left: 1rem">
                 <p>Введите отчество</p>
-                <input type="text" class="input_one_row" placeholder="Иванович">
+                <input type="text" class="input_one_row" ref="third_name_input" placeholder="Иванович">
             </div>
         </div>
 
         <p style="margin-top: 10px; margin-bottom: 10px;">Введите номер телефона</p>
-        <input type="text" placeholder="+7 900 000 00 00" class="input_two_row">
+        <input type="text" placeholder="+7 900 000 00 00" class="input_two_row" ref="number_input">
         <center>
             <p style="color: gray;margin-top: 0.5rem;">или</p>
         </center>
         <p>Введите ссылку на социальную сеть</p>
         <div style="display: flex;flex-direction: column;">
-            <input placeholder="https://t.me/@name" type="text" class="input_two_row" style="margin-top: 10px; margin-bottom: 10px;">
+            <input placeholder="https://t.me/@name" ref="social_input" type="text" class="input_two_row" style="margin-top: 10px; margin-bottom: 10px;">
 
-            <textarea placeholder="Напишите мне что-то" style="margin-top: 10px; margin-bottom: 10px;height: 320px;padding: 20px;   font-size: 16.2px;"></textarea>
+            <textarea ref="text_input" placeholder="Напишите мне что-то" style="margin-top: 10px; margin-bottom: 10px;height: 320px;padding: 20px;   font-size: 16.2px;"></textarea>
         </div>
 
 
 
         <div class="footer_modal">
             <button class="button_modal_controll"  @click="closeModal">Закрыть</button>
-            <button class="button_modal_controll" style="background-color: rgb(30, 181, 30); ">Отправить</button>
+            <button class="button_modal_controll" style="background-color: rgb(30, 181, 30); " @click="send_question">Отправить</button>
         </div>
       </div>
     </div>
   </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Modal_Connect',
     props: {
@@ -53,12 +56,58 @@ export default {
     methods: {
         closeModal() {
             this.$emit('close');
+        },
+         send_question(){
+            if(this.$refs.name_input.value == '' || this.$refs.third_name_input.value == '' || (this.$refs.number_input.value == ''&&this.$refs.social_input == '')||this.$refs.text_input.value == '')
+              return this.is_something_bad = true
+             
+            else
+              axios.post('http://localhost:3000/send_connect',{
+                  name:this.$refs.name_input.value,
+                  third_name:this.$refs.third_name_input.value,
+                  addres:this.$refs.number_input.value==''?this.$refs.number_input.value:this.$refs.social_input.value,
+                  his_text:this.$refs.text_input.value
+              })
+            this.closeModal()
         }
+    },data(){
+      return {
+        is_something_bad:false
+      }
+    },mounted(){
+      this.$refs.main.parentElement.addEventListener('keydown', (event)=>{
+        if(event.key === 'Escape' && window.getComputedStyle(this.$refs.main).display == 'flex'){
+          this.closeModal()
+        }
+      });
+      
     }
 }
 </script>
 
 <style>
+@keyframes spawn_frame {
+  from{
+      opacity: 0;
+  }
+  to{
+      opacity: 1;
+  }
+}
+.spawn{
+  animation: spawn_frame;
+  opacity: 1;
+  animation-duration: 0.6s;
+  animation-iteration-count: 1;
+  margin-bottom: 1rem;
+}
+.spawn{
+  animation: spawn_frame;
+  opacity: 1;
+  animation-duration: 0.6s;
+  animation-iteration-count: 1;
+  margin-bottom: 0rem;
+}
 /* Глобальные стили */
 .modal-overlay {
   position: fixed;

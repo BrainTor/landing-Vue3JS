@@ -41,7 +41,7 @@
 
 <script>
 
-
+import axios from 'axios';
 export default {
     name: 'Find_tres_Pages',
     data() {
@@ -54,9 +54,15 @@ export default {
             is_win: false,
             chest: null,
             diamond: null,
-            cap: null
+            cap: null,
+            startTime: 0,
+            endTime:0,
+            local_ref:null
         }
     }, mounted() {
+        this.startTime = new Date();
+        if(localStorage.getItem('ref') != null)
+            this.local_ref = localStorage.getItem('ref') 
         this.generate_win_number()
         this.chests['chest1'] = this.$refs.chest1
         this.chests['chest2'] = this.$refs.chest2
@@ -132,8 +138,23 @@ export default {
             });
 
             this.$refs.chest_row.appendChild(this.chests[chest_ref_name]);
+        },
+        async send_location(ref , time) {
+            axios.post('http://localhost:3000/send_location', {
+                location: 'game_tres',
+                referal: ref, 
+                time:time
+            })
         }
+       
 
+    } ,async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
     }
 
 

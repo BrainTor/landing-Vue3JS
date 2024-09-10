@@ -32,10 +32,14 @@
 
 <script>
 import Back_Button from '@/components/UI/Back_Button.vue';
+import axios from 'axios';
 export default{
     name:'Calculator_Page',data(){
         return {
-            answer:''
+            answer:'',
+            startTime: 0,
+            endTime:0,
+            local_ref:null
         }
     }, 
     components:{
@@ -57,7 +61,27 @@ export default{
                     this.answer = parseInt(this.$refs.numb1.value) / parseInt(this.$refs.numb2.value)
                     break
             }
+        },
+        async send_location(ref , time) {
+            
+            axios.post('http://localhost:3000/send_location', {
+                location: 'game_calc',
+                referal: ref, 
+                time:time
+            })
         }
+    },mounted(){
+        this.startTime = new Date();
+        if(localStorage.getItem('ref')!=null)
+            this.local_ref = localStorage.getItem('ref')
+    },
+    async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
     }
 }
 </script>

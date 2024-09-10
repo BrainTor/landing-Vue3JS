@@ -33,6 +33,7 @@
 
 <script>
 import Back_Button from '@/components/UI/Back_Button.vue';
+import axios from 'axios';
 export default {
     name: 'Ham_Page',
     data() {
@@ -51,11 +52,21 @@ export default {
                 require('@/assets/img/games/coin5.png'),
                 require('@/assets/img/games/coin6.png'),
                 require('@/assets/img/games/coin7.png')
-            ]
+            ],
+            startTime: 0,
+            endTime:0,
+            local_ref:null
         }
     }, components: {
         Back_Button
     }, methods: {
+        async send_location(ref , time) {
+            axios.post('http://localhost:3000/send_location', {
+                location: 'game_ham',
+                referal: ref, 
+                time:time
+            })
+        },
         click_button() {
             if (this.energy <= 0) return
             this.money += this.money_per_click
@@ -138,6 +149,9 @@ export default {
         }
     },
     mounted() {
+        this.startTime = new Date();
+        if(localStorage.getItem('ref')!=null)
+            this.local_ref = localStorage.getItem('ref')
         if (this.one_time) {
             this.one_time = false
             setInterval(() => {
@@ -166,6 +180,14 @@ export default {
 
         if (this.money > 100000000 && this.lvl == 7) this.img_src = this.sources[5]
 
+    },
+    async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
     }
 }
 </script>

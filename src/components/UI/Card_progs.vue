@@ -18,7 +18,7 @@
   
     </div>
     <center>
-        <button class="connect_with_me">
+        <button class="connect_with_me" @click ="toggle_con">
             <fa icon="link" /> Свяжитесь со мной
         </button>
     </center>
@@ -110,6 +110,9 @@ export default {
             this.company_default = this.object.companys[next_number]
             this.img_default = this.object.imgs[next_number]
             this.current_number = next_number
+        }
+        ,toggle_con(){
+            this.$emit("toggle")
         }
     }
 }

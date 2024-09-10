@@ -29,7 +29,7 @@
 
 <script>
 import Back_Button from '@/components/UI/Back_Button.vue';
-
+import axios from 'axios';
 
 export default{
     name:'Cross_page',
@@ -71,16 +71,38 @@ export default{
             else if((this.$refs.button3.innerText == this.$refs.button5.innerText&&this.$refs.button3.innerText!='-')&&
                 this.$refs.button5.innerText == this.$refs.button7.innerText)
                 return this.is_win = true
+        },
+        async send_location(ref , time) {
+            axios.post('http://localhost:3000/send_location', {
+                location: 'game_cross',
+                referal: ref, 
+                time:time
+            })
         }
     }
     ,data(){
         return {
             cross_or_null:'x',
-            is_win:false
+            is_win:false,
+            startTime: 0,
+            endTime:0,
+            local_ref:null
         }
     },
     components:{
         Back_Button
+    },mounted(){
+        this.startTime = new Date();
+        if(localStorage.getItem('ref')!=null)
+            this.local_ref = localStorage.getItem('ref')
+    },
+    async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
     }
 }
 </script>

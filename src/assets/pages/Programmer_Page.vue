@@ -3,6 +3,8 @@
         <p style="font-size: 16.5px; margin-top: 10px;margin-bottom: 10px;">Напишите ваш, номер телефона и получите скидку<br>на написание программы в размере 10% 
         </p>
     </Modal_ads>
+
+    <Modal_Connect :isVisible="this.isVisible" @close="this.togle_Modal" />
   <Nav_Component place = "code" @scroll_to="handle_navbar"></Nav_Component>
 
     <section class="main_section">
@@ -105,11 +107,11 @@
                 Практические примеры
             </h1>
         </center>
-        <Card_progs></Card_progs>
+        <Card_progs @toggle = "togle_Modal"></Card_progs>
     </section>
 
   <div ref="section_contact">
-    <Footer_Component></Footer_Component>
+    <Footer_Component @toggle = "togle_Modal"></Footer_Component>
   </div>
 
   
@@ -120,6 +122,8 @@ import Nav_Component from '@/components/Nav_Component.vue';
 import Modal_ads from '@/components/Modal_ads.vue'
 import Back_Button from '@/components/UI/Back_Button.vue';
 import Card_progs from '@/components/UI/Card_progs.vue';
+import Modal_Connect from '@/components/Modal_Connect.vue';
+import axios from 'axios';
     export default{ 
         name:'Programmer_Page', 
         components:{
@@ -127,29 +131,56 @@ import Card_progs from '@/components/UI/Card_progs.vue';
             Footer_Component,
             Modal_ads,
             Back_Button,
-            Card_progs
+            Card_progs,
+            Modal_Connect
         },
         data(){
             return {
                 is_Visible_ads:false,
-                randomTime:  Math.round(Math.random() * (12000 - 7000) + 7000) 
+                randomTime:  Math.round(Math.random() * (12000 - 7000) + 7000),
+                startTime: 0,
+                endTime:0,
+                local_ref:null,
+                isVisible:false
             }
         },
         methods:{
             hadle_ads(){
                 this.is_Visible_ads = !this.is_Visible_ads
             },
+            togle_Modal(){
+                this.isVisible = !this.isVisible
+            },
             handle_navbar(data){
                 let check_el = this.$refs['section' + data]
                 if (check_el) check_el.scrollIntoView({ behavior: 'smooth' })
-            }
+            },
+            async send_location(ref , time) {
+                
+            await axios.post('http://localhost:3000/send_location', {
+                location: 'code_page',
+                referal: ref, 
+                time:time
+            })
+        }
         },
         mounted(){
             if(sessionStorage.getItem('ads')==null){
                 setTimeout(this.hadle_ads,this.randomTime)
                 sessionStorage.setItem('ads' , true)
             }
-        }
+            if(localStorage.getItem('ref')!=null)
+                this.local_ref = localStorage.getItem('ref')
+            this.startTime = new Date();
+        },
+        async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
+    }
     }
 </script>
 <style>

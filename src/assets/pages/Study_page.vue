@@ -164,6 +164,7 @@ import Footer_Component from '@/components/Footer_Component.vue';
 import Nav_Component from '@/components/Nav_Component.vue';
 import Back_Button from '@/components/UI/Back_Button.vue';
 import Modal_ads from '@/components/Modal_ads.vue'
+import axios from 'axios';
 export default {
     name: 'Study_page',
     components: {
@@ -178,11 +179,21 @@ export default {
         },
         hadle_ads() {
             this.is_Visible_ads = !this.is_Visible_ads
+        },
+        async send_location(ref , time) {
+            axios.post('http://localhost:3000/send_location', {
+                location: 'study_page',
+                referal: ref, 
+                time:time
+            })
         }
     }, data() {
         return {
             is_Visible_ads: false,
-            randomTime: Math.round(Math.random() * (12000 - 7000) + 7000)
+            randomTime: Math.round(Math.random() * (12000 - 7000) + 7000),
+            startTime: 0,
+            endTime:0,
+            local_ref:null
         }
     },
     mounted() {
@@ -190,6 +201,17 @@ export default {
             setTimeout(this.hadle_ads, this.randomTime)
             sessionStorage.setItem('ads', true)
         }
+        if(localStorage.getItem('ref')!=null)
+            this.local_ref = localStorage.getItem('ref')
+        this.startTime = new Date();
+    },
+    async beforeUnmount(){
+        this.endTime = new Date();
+        let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
+        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
+        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
+        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        await this.send_location(this.local_ref, totalTimeSpent)
     }
 }
 </script>
