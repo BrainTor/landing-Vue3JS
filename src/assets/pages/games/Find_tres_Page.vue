@@ -1,7 +1,7 @@
 <template>
     <div class="main_container_game" style="justify-content: space-around !important;">
 
-        <h2 style="color: whitesmoke;margin-bottom: 20px; text-align: center;" ref="title">В одном из сундуков спрятан алмаз, постарайтесь
+        <h2 style="color: whitesmoke;margin-bottom: 20px; text-align: center;" class="title_tres" ref="title">В одном из сундуков спрятан алмаз, постарайтесь
             его найти :)</h2>
 
 
@@ -26,14 +26,20 @@
                 <div class="base"></div>
             </div>
         </div>
-        <div class="buttons">
-            <RouterLink to = '/study'>
-                <button class="controll_button">Вернуться назад</button>
-            </RouterLink>
-            
-            <button class="controll_button" onclick="window.location.reload()">Перезапустить</button>
-            <button class="controll_button" @click="new_lvl" v-if="is_win">Следующий уровень</button>
-        </div>
+        <center>
+            <div class="buttons">
+                <RouterLink to = '/study'>
+                    <button class="controll_button" v-if="!is_mobile">Вернуться назад</button>
+                    <button class="controll_button" v-else><fa icon="chevron-left" /></button>
+                </RouterLink>
+                
+                <button class="controll_button" onclick="window.location.reload()" v-if="!is_mobile">Перезапустить</button>
+                <button class="controll_button" onclick="window.location.reload()" v-else><fa icon="rotate-right" /></button>
+                <button class="controll_button" @click="new_lvl" v-if="is_win && !is_mobile">Следующий уровень</button>
+                <button class="controll_button" @click="new_lvl" v-else-if="is_win"><fa icon="chevron-right" /></button>
+            </div>
+        </center>
+   
 
 
     </div>
@@ -57,9 +63,11 @@ export default {
             cap: null,
             startTime: 0,
             endTime:0,
-            local_ref:null
+            local_ref:null, 
+            is_mobile:false
         }
     }, mounted() {
+        this.is_mobile = window.innerWidth<700
         this.startTime = new Date();
         if(localStorage.getItem('ref') != null)
             this.local_ref = localStorage.getItem('ref') 
@@ -90,7 +98,7 @@ export default {
                 left:42%;
                 z-index:-1;
                 `
-                //alert( this.chests['chest' + this.win_number])
+                
                 this.chest = this.chests['chest' + this.win_number]
                 this.chest.appendChild(this.diamond)
                 this.cap = this.caps['cap' + id]
@@ -112,7 +120,7 @@ export default {
             this.is_win = false
             this.is_clicked = false
             this.chest_count++
-            alert(this.chest_count)
+           
             this.$refs.title.innerText = 'Попытайте удачу снова!'
             this.generate_win_number()
 
@@ -206,6 +214,10 @@ export default {
 
 .buttons {
     margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center !important;
 }
 
 .controll_button {

@@ -7,9 +7,11 @@
     <section class="header_section">
         <img ref="img_header" src="@/assets/img/main-section.jpg" class="img_undercover" alt="">
         <div class="cover">
-            <h1 style="text-align: center;font-size: 24pt; font-weight: 600; margin-top: -100px;">Разработка программного обеспечения любой
+            <h1 style="text-align: center;font-size: 24pt; font-weight: 600; margin-top: -100px;" class="header_title">
+                Разработка программного обеспечения любой
                 сложности.<br>Обучение любым направлениям программирования!</h1>
-            <h1 style="text-align: center;margin-top: 1.5rem;font-weight: 400;"><br> <strong>Разработка</strong>
+            <h1 style="text-align: center;margin-top: 1.5rem;font-weight: 400;" class="header_under_title"><br>
+                <strong>Разработка</strong>
                 программного
                 обеспечения для любой платформы: быстро, качественно, не дорого!
                 <br><strong>Обучение</strong> всем направлениям программирования. Для вас и ваших детей
@@ -248,8 +250,8 @@ export default {
             is_Visible_ads: false,
             randomTime: Math.round(Math.random() * (10000 - 7000) + 7000),
             startTime: 0,
-            endTime:0, 
-            local_ref:null
+            endTime: 0,
+            local_ref: null
         }
     },
     async mounted() {
@@ -260,18 +262,20 @@ export default {
         this.startTime = new Date();
         this.local_ref = this.$route.query.ref || null
 
-        if(this.local_ref!=null)
+        if (this.local_ref != null)
             localStorage.setItem('ref', this.local_ref)
-        
-        if(this.local_ref==null&&localStorage.getItem('ref')!=null)
+
+        if (this.local_ref == null && localStorage.getItem('ref') != null)
             this.local_ref = localStorage.getItem('ref')
-        
+
         const options = {
             root: null,
             rootMargin: '0px',
             threshold: 0.001
         }
         const observer = new IntersectionObserver((entries) => {
+            if (window, innerWidth < 900)
+                return
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     switch (entry.target) {
@@ -306,9 +310,13 @@ export default {
             }
         }
     }, methods: {
-        handle_nav(data) {
+        async handle_nav(data) {
             let check_el = this.$refs['section' + data]
-            if (check_el) check_el.scrollIntoView({ behavior: 'smooth' })
+
+            if (check_el)
+                setTimeout(() => {
+                    check_el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 0);
         },
         togle_Modal() {
             this.isVisible = !this.isVisible
@@ -325,19 +333,19 @@ export default {
                     setTimeout(this.handle_ads_func, 15000)
             }, this.randomTime)
         },
-        async send_location(ref , time) {
+        async send_location(ref, time) {
             axios.post('http://localhost:3000/send_location', {
                 location: 'main_page',
-                referal: ref, 
-                time:time
+                referal: ref,
+                time: time
             })
         }
-    },async beforeUnmount(){
+    }, async beforeUnmount() {
         this.endTime = new Date();
         let totalTimeSpent = Math.floor((this.endTime - this.startTime) / 1000);
-        totalTimeSpent = Math.floor(totalTimeSpent/60) != 0?
-        `Минут: ${Math.floor(totalTimeSpent/60)}, Секунд: ${Math.floor(totalTimeSpent%60)}`:
-        `Секунд: ${Math.floor(totalTimeSpent%60)}`
+        totalTimeSpent = Math.floor(totalTimeSpent / 60) != 0 ?
+            `Минут: ${Math.floor(totalTimeSpent / 60)}, Секунд: ${Math.floor(totalTimeSpent % 60)}` :
+            `Секунд: ${Math.floor(totalTimeSpent % 60)}`
         await this.send_location(this.local_ref, totalTimeSpent)
     }
 }
@@ -346,7 +354,7 @@ export default {
 <style scoped>
 .nav_bar {
     position: sticky;
-    width: 100% !important;
+    width: 100%;
     left: 0%;
     top: 0%;
     z-index: 1000;
@@ -437,7 +445,7 @@ export default {
 
 .profile-info p {
     margin-top: 10px;
-    font-size: 17px;
+    font-size: 18.3px;
     color: #666;
     line-height: 1.5;
 }
@@ -511,11 +519,19 @@ export default {
 }
 
 .container_col {
-    width: 25% !important;
+    width: 25%;
+}
+
+h3 {
+    font-size: 18.3px;
 }
 
 .text_why_me {
-    font-size: 17px;
+    font-size: 18.3px;
+}
+
+h4 {
+    font-size: 18.3px;
 }
 
 .section_study {
@@ -560,7 +576,7 @@ export default {
 
 .text_left_block {
     width: 350px;
-    font-size: 16.5px;
+    font-size: 18.3px;
     margin-left: 15px;
 }
 

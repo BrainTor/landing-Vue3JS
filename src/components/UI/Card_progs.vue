@@ -166,6 +166,8 @@ h3, p {
 }
 .central_continer{
     width: 600px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .connect_with_me {
     background-color: var(--main-color);

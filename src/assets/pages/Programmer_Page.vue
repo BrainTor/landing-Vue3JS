@@ -5,39 +5,37 @@
     </Modal_ads>
 
     <Modal_Connect :isVisible="this.isVisible" @close="this.togle_Modal" />
-  <Nav_Component place = "code" @scroll_to="handle_navbar"></Nav_Component>
+  <Nav_Component place = "code" @scroll_to="handle_navbar" class="testrr"></Nav_Component>
 
     <section class="main_section">
-        <RouterLink to = "/">
-            <Back_Button style="margin-left: 20px; margin-top: 20px;"></Back_Button>
-        </RouterLink>
+  
         
-        <h1 style="text-align: center; margin-top: 1rem; margin-bottom: 1rem;">Я создаю приложения, которые работают на разных платформах и с использованием современных технологий</h1>
-        <p style="text-align: center; font-size: 1.17em;">
+        <h1 style="text-align: center; margin-top: 1rem; margin-bottom: 1rem;" class="testr">Я создаю приложения, которые работают на разных платформах и с использованием современных технологий</h1>
+        <p style="text-align: center; font-size: 18.3px;">
             Это идеальный способ реализовать ваши идеи в реальность. 
         </p>
         <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap; margin-top: 1rem; margin-bottom: 1rem; ">
             <div style="width: 250px; flex-direction: column; align-items: center;
              display: flex;">
-                <img src="@/assets/img/progs/agile.png" width="115px" alt="">
+                <img src="@/assets/img/progs/agile.png" class="img_progs" width="115px" alt="">
                 <h2>Гибкость</h2>
-                <p style="text-align: center; font-size: 16.5px;">Я работаю, с заказами разной степени сложности и срочности</p>
+                <p style="text-align: center; font-size: 18.3px;">Я работаю, с заказами разной степени сложности и срочности</p>
             </div>
 
             <div style="width: 250px; flex-direction: column; align-items: center;
              display: flex;">
-                <img src="@/assets/img/progs/platform.png" width="115px" alt="">
+                <img class="img_progs" src="@/assets/img/progs/platform.png" width="115px" alt="">
                 <h2>Платформы</h2>
-                <p style="text-align: center; font-size: 16.5px;">
+                <p style="text-align: center; font-size: 18.3px;">
                     Создаю мобильные приложения, веб-сайты и приложения для компьютера – всё, что нужно для вашего бизнеса.
                 </p>
             </div>
 
             <div style="width: 250px; flex-direction: column; align-items: center;
              display: flex;">
-                <img src="@/assets/img/progs/effective.png" width="115px" alt="">
+                <img class="img_progs" src="@/assets/img/progs/effective.png" width="115px" alt="">
                 <h2>Эффективность</h2>
-                <p style="text-align: center; font-size: 16.5px;">Моя цель – быстрое и качественное выполнение задач, чтобы ваш проект был готов в кратчайшие сроки.</p>
+                <p style="text-align: center; font-size: 18.3px;">Моя цель – быстрое и качественное выполнение задач, чтобы ваш проект был готов в кратчайшие сроки.</p>
             </div>
         </div>
     </section>
@@ -45,9 +43,9 @@
 
     <section>
 
-        <div style="width: 100%; height: fit-content; position: relative;">
-            <img src="@/assets/img/progs/block.jpg" style="width: 100% !important; filter: blur(5px)">
-            <div style="position: absolute; z-index: 2; width: 100%; top:0%; left:0%;height: 100%; display: flex; justify-content: center; align-items: center;">
+        <div style="width: 100%; height: fit-content; position: relative;" >
+            <img :src="img_src" style="width: 100% !important; filter: blur(5px)" class="mobile_progs">
+            <div ref="for_cont" class="for_cont_progs" style="position: absolute; z-index: 2; width: 100% !important; top:0%; left:0%;height: 100%; display: flex; justify-content: center; align-items: center;">
                 
                 <div class="block_about">
                     <h1 style="color: white;">Более 30</h1>
@@ -74,20 +72,20 @@
             Начать разработку просто
         </h1>
     
-        <div style="width: 100%; justify-content: space-evenly;  align-items: center; display: flex; margin-top: 20px;">
+        <div style="width: 100%; justify-content: space-evenly;  align-items: center; display: flex; margin-top: 20px; flex-wrap: wrap;">
             <div style="width: 370px;">
                 <div class="circle_element">
                     <div class="number_inside_circle">1</div>
                 </div>
                 <h2 style="text-align: center;">Индивидуальный подход</h2>
-                <p style="font-size: 16.5px;  text-align: center;">Все ваши требования и предпочтения учитываются, во время разработки уникальных решений под ваш проект.</p>
+                <p style="font-size: 18.3px;  text-align: center;">Все ваши требования и предпочтения учитываются, во время разработки уникальных решений под ваш проект.</p>
             </div>
             <div style="width: 370px;">
                 <div class="circle_element">
                     <div class="number_inside_circle">2</div>
                 </div>
                 <h2 style="text-align: center;">Первый этап бесплатно</h2>
-                <p style="font-size: 16.5px;  text-align: center;">Получите консультацию и оценку проекта на первом этапе совершенно бесплатно. Мы обсудим все детали и сделаем предварительный план.</p>
+                <p style="font-size: 18.3px;  text-align: center;">Получите консультацию и оценку проекта на первом этапе совершенно бесплатно. Мы обсудим все детали и сделаем предварительный план.</p>
             </div>
             
             <div style="width: 370px;">
@@ -95,7 +93,7 @@
                     <div class="number_inside_circle">3</div>
                 </div>
                 <h2 style="text-align: center;">Демократичные и прозрачные цены</h2>
-                <p style="font-size: 16.5px; text-align: center;">Вы всегда знаете, за что платите. У нас фиксированные цены, а также гибкая система правок и доработок без лишних затрат.</p>
+                <p style="font-size: 18.3px; text-align: center;">Вы всегда знаете, за что платите. У нас фиксированные цены, а также гибкая система правок и доработок без лишних затрат.</p>
             </div>
         </div>
 
@@ -120,7 +118,7 @@
 import Footer_Component from '@/components/Footer_Component.vue';
 import Nav_Component from '@/components/Nav_Component.vue';
 import Modal_ads from '@/components/Modal_ads.vue'
-import Back_Button from '@/components/UI/Back_Button.vue';
+
 import Card_progs from '@/components/UI/Card_progs.vue';
 import Modal_Connect from '@/components/Modal_Connect.vue';
 import axios from 'axios';
@@ -130,7 +128,6 @@ import axios from 'axios';
             Nav_Component, 
             Footer_Component,
             Modal_ads,
-            Back_Button,
             Card_progs,
             Modal_Connect
         },
@@ -141,7 +138,8 @@ import axios from 'axios';
                 startTime: 0,
                 endTime:0,
                 local_ref:null,
-                isVisible:false
+                isVisible:false,
+                img_src:''
             }
         },
         methods:{
@@ -165,6 +163,13 @@ import axios from 'axios';
         }
         },
         mounted(){
+            if(window.innerWidth<700)
+                this.img_src = require('@/assets/img/progs/cyber.jpg')
+            else {
+                this.$refs.for_cont.style.width = ''
+                this.img_src = require('@/assets/img/progs/block.jpg')
+            }
+               
             if(sessionStorage.getItem('ads')==null){
                 setTimeout(this.hadle_ads,this.randomTime)
                 sessionStorage.setItem('ads' , true)
@@ -183,7 +188,10 @@ import axios from 'axios';
     }
     }
 </script>
-<style>
+<style scoped>
+.for_cont_progs{
+    width: 100% !important;
+}
 .block_about{
     width: 300px;
     display: flex;

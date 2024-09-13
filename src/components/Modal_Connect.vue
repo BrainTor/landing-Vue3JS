@@ -8,14 +8,14 @@
         <button class="close-btn" @click="closeModal">&times;</button>
         <h2 style="margin-bottom: 0.5rem;">Свяжитесь со мной</h2>
         <h3 style="color:red" class="spawn" v-if="is_something_bad">Не заполнено одно из полей</h3>
-        <div style="display: flex;">
-            <div style="display: flex; flex-direction: column">
+        <div style="display: flex;" class="for_mobile_connect">
+            <div style="display: flex; flex-direction: column;width: 100%; align-items: center;" >
               
                 <p>Введите имя</p>
            
                 <input placeholder="Иван" ref="name_input" class="input_one_row" type="text">
             </div>
-            <div style="display: flex; flex-direction: column;margin-left: 1rem">
+            <div style="display: flex; flex-direction: column;margin-left: 1rem; width: 100%; align-items: center;" class="for_mobile_connect_third">
                 <p>Введите отчество</p>
                 <input type="text" class="input_one_row" ref="third_name_input" placeholder="Иванович">
             </div>
@@ -26,11 +26,11 @@
         <center>
             <p style="color: gray;margin-top: 0.5rem;">или</p>
         </center>
-        <p>Введите ссылку на социальную сеть</p>
-        <div style="display: flex;flex-direction: column;">
+        <p class="ustal_nazv">Введите ссылку на социальную сеть</p>
+        <div style="display: flex;flex-direction: column;" class="bottom_part_connect">
             <input placeholder="https://t.me/@name" ref="social_input" type="text" class="input_two_row" style="margin-top: 10px; margin-bottom: 10px;">
 
-            <textarea ref="text_input" placeholder="Напишите мне что-то" style="margin-top: 10px; margin-bottom: 10px;height: 320px;padding: 20px;   font-size: 16.2px;"></textarea>
+            <textarea ref="text_input" placeholder="Напишите мне что-то" style="margin-top: 10px; margin-bottom: 10px;height: 320px;padding: 20px;   font-size: 16.2px;" class="text_area"></textarea>
         </div>
 
 
@@ -76,9 +76,14 @@ export default {
       }
     },mounted(){
       this.$refs.main.parentElement.addEventListener('keydown', (event)=>{
-        if(event.key === 'Escape' && window.getComputedStyle(this.$refs.main).display == 'flex'){
+        try{
+          if(event.key === 'Escape' && window.getComputedStyle(this.$refs.main).display == 'flex'){
           this.closeModal()
+          }
+        }catch{
+          console.log('hz')
         }
+     
       });
       
     }

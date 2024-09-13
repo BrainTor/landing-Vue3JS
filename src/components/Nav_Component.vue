@@ -11,6 +11,17 @@
             <button class="button_info" @click="handle_change('_code')"><fa icon="code" /> Разработка</button>
             <button class="button_info button_contact" @click="handle_change('_contact')"><fa icon="address-book" /> Контакты</button>
         </div>
+        
+
+        <div class="mobile_nav">
+            <h3 style="color: white; font-size: 22px;" @click.prevent="toggleDropdown"><fa icon ="compass"/></h3>
+            <ul v-if="isDropdownOpen" class="dropdown-menu">
+                <li @click="handle_change('_about')"><a href="#"><fa icon="circle-info" style="margin-right: 1px;"/> Обо мне</a></li>
+                <li @click="handle_change('_study')"><a href="#"><fa icon="book" /> Обучение</a></li>
+                <li @click="handle_change('_code')"><a href="#"><fa icon="code" /> Разработка</a></li>
+                <li @click="handle_change('_contact')"><a href="#"><fa icon="address-book" /> Контакты</a></li>
+              </ul>
+        </div>
     </div>
 
     <div class="nav_bar" v-else>
@@ -35,6 +46,25 @@
           
             <button class="button_info button_contact" @click="handle_change('_contact')"><fa icon="address-book" /> Контакты</button>
         </div>
+
+        <div class="mobile_nav">
+            <h3 style="color: white; font-size: 22px;" @click.prevent="toggleDropdown"><fa icon="compass" /></h3>
+            <ul v-if="isDropdownOpen" class="dropdown-menu">
+                <router-link to="/">
+                    <li><a href="#"><fa icon = "house"></fa> На главную</a></li>
+                </router-link>
+                
+                <router-link to="/study">
+                    <li ><a href="#"><fa icon="book" /> Обучение</a></li>
+                </router-link>
+                
+                <router-link to="/code">
+                    <li ><a href="#"><fa icon="code" /> Разработка</a></li>
+                </router-link>
+                    <li ><a href="#"><fa icon="address-book" /> Контакты</a></li>
+
+              </ul>
+        </div>
     </div>
 
 </template>
@@ -45,14 +75,21 @@ export default {
     methods:{
         handle_change(name){
             this.$emit('scroll_to', name);
-        }
+            // if(window.length<700)
+            // this.isDropdownOpen = !this.isDropdownOpen;
+        },
+        toggleDropdown() {
+            this.isDropdownOpen = !this.isDropdownOpen;
+    },
     },props:{
         place:String
     },beforeMount(){
         if(this.place != 'main') this.what_display = false
+        
     },data(){
         return {
-            what_display:true
+            what_display:true,
+            isDropdownOpen: false,
         }
     }
 }
@@ -68,6 +105,7 @@ export default {
         color: var(--text-color_nav);
         width: 100%;
         opacity: 1;
+        z-index: 40;
 
     }
     .logo_text{
@@ -85,7 +123,7 @@ export default {
         background-color: transparent;
         color: var(--text-color_nav);
         font-family: "PT Serif", serif;
-        font-size: 16.5px;
+        font-size: 18.3px;
         border: 0px;
         cursor: pointer;
         transition:0.3s all;
@@ -121,4 +159,34 @@ export default {
             color: white;
         }
       }
+      .mobile_nav{
+        display: none;
+      }
+      
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: calc(100% - 150px) ;
+    background-color: #444;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0px;
+    min-width: 150px;
+    padding-bottom: 20px;
+  }
+  
+  .dropdown-menu li a {
+ 
+    text-decoration: none;
+    width: 100%;
+    color: white;
+  }
+  
+  .dropdown-menu li {
+    text-align: center;
+    margin-top: 10px;
+
+    color: white;
+  }
+
 </style>
