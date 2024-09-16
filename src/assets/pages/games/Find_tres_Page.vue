@@ -148,7 +148,7 @@ export default {
             this.$refs.chest_row.appendChild(this.chests[chest_ref_name]);
         },
         async send_location(ref , time) {
-            axios.post('http://localhost:3000/send_location', {
+            axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_location`, {
                 location: 'game_tres',
                 referal: ref, 
                 time:time

@@ -9,9 +9,9 @@
             </RouterLink>
             <h3>Калькулятор</h3>
  
-            <div style="display: flex; align-items: center;">
+            <div style="display: flex; align-items: center;" class="calc_mobile">
                 <input class="input_calc" type="number" ref="numb1">
-                <div>  
+                <div class="buttons_calc_mobile">  
                     <div>
                         <button class="button_chast" @click="this.calc_res('+')">+</button>
                         <button class="button_chast" @click="this.calc_res('-')">-</button>
@@ -64,7 +64,7 @@ export default{
         },
         async send_location(ref , time) {
             
-            axios.post('http://localhost:3000/send_location', {
+            axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_location`, {
                 location: 'game_calc',
                 referal: ref, 
                 time:time

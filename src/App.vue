@@ -259,6 +259,28 @@ body {
 .title_tres{
   padding: 20px;
 }
+.calc_mobile{
+  flex-direction: column;
+}
+.buttons_calc_mobile{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.ham_img_mobile{
+  width: 90%;
+}
+.row_ham{
+  justify-content: space-between !important;
+
+}
+.row_ham h3{ 
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.row_ham p{ 
+  margin-left: 15px;
+
+}
 }
 
 </style>

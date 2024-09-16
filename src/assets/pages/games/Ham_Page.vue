@@ -1,29 +1,54 @@
 <template>
 
-    <div class="main_container_game">
+    <div class="main_container_game ham_page_mobile">
         <RouterLink to="/study">
             <Back_Button style="position: absolute; top: 50px;left:4%"></Back_Button>
         </RouterLink>
 
         <div class="row_ham">
-            <div>
+            <div v-if="!is_mobile">
                 <h2>Ваш уровень:</h2>
                 <p>{{ this.lvl }}</p>
             </div>
-            <div>
+
+            <div v-else>
+                <h3>Уровень:</h3>
+                <p>{{ this.lvl }}</p>
+            </div>
+
+            <div v-if="!is_mobile">
                 <h2>Ваши деньги:</h2>
                 <p style="color: #00FF00;">{{ this.money }}$</p>
             </div>
 
+            <div v-else>
+                <h3>Деньги:</h3>
+                <p style="color: #00FF00;">{{ this.money }}$</p>
+            </div>
+
+
         </div>
-        <img :src="img_src" ref="main_but" @click="click_button" width="600px" style="cursor: pointer;">
+        <button style="width: fit-content; background-color: transparent; border: 0px;" @click="click_button" ref="main_but">
+            <img :src="img_src" class="ham_img_mobile"  width="600px" style="cursor: pointer;   -webkit-tap-highlight-color: transparent;user-select: none;outline: none;">
+        </button>
+       
         <div class="row_ham">
-            <div>
+            <div v-if="!is_mobile">
                 <h2>Ваша энергия:</h2>
                 <p>{{ this.energy }}</p>
             </div>
-            <div>
+
+            <div v-else>
+                <h3>Энергия:</h3>
+                <p>{{ this.energy }}</p>
+            </div>
+            <div v-if="!is_mobile">
                 <h2>Ваши деньги в час:</h2>
+                <p>{{ this.money_per_h }}</p>
+            </div>
+
+            <div v-else>
+                <h3>Деньги в час:</h3>
                 <p>{{ this.money_per_h }}</p>
             </div>
 
@@ -55,13 +80,14 @@ export default {
             ],
             startTime: 0,
             endTime:0,
-            local_ref:null
+            local_ref:null,
+            is_mobile:false
         }
     }, components: {
         Back_Button
     }, methods: {
         async send_location(ref , time) {
-            axios.post('http://localhost:3000/send_location', {
+            axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_location`, {
                 location: 'game_ham',
                 referal: ref, 
                 time:time
@@ -149,6 +175,7 @@ export default {
         }
     },
     mounted() {
+        if(window.innerWidth<900) this.is_mobile = true
         this.startTime = new Date();
         if(localStorage.getItem('ref')!=null)
             this.local_ref = localStorage.getItem('ref')

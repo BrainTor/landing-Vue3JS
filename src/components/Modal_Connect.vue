@@ -62,7 +62,7 @@ export default {
               return this.is_something_bad = true
              
             else
-              axios.post('http://localhost:3000/send_connect',{
+              axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_connect`,{
                   name:this.$refs.name_input.value,
                   third_name:this.$refs.third_name_input.value,
                   addres:this.$refs.number_input.value==''?this.$refs.number_input.value:this.$refs.social_input.value,

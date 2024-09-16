@@ -73,7 +73,7 @@ export default{
                 return this.is_win = true
         },
         async send_location(ref , time) {
-            axios.post('http://localhost:3000/send_location', {
+            axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_location`, {
                 location: 'game_cross',
                 referal: ref, 
                 time:time

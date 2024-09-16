@@ -61,7 +61,7 @@ export default {
     },
     async send_ads(){
         if(this.$refs.number_input.value != '')
-            axios.post('http://localhost:3000/send_ads',{
+            axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_ads`,{
                 number:this.$refs.number_input.value 
             })
         else

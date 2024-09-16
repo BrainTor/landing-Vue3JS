@@ -5,21 +5,24 @@
     </Modal_ads>
 
     <Modal_Connect :isVisible="this.isVisible" @close="this.togle_Modal" />
-  <Nav_Component place = "code" @scroll_to="handle_navbar" class="testrr"></Nav_Component>
+    <div ref="nav">
+
+    </div>
+  <Nav_Component  place = "code" @scroll_to="handle_navbar" class="testrr"></Nav_Component>
 
     <section class="main_section">
   
         
-        <h1 style="text-align: center; margin-top: 1rem; margin-bottom: 1rem;" class="testr">Я создаю приложения, которые работают на разных платформах и с использованием современных технологий</h1>
+        <h1 style="text-align: center; margin-top: 1rem; margin-bottom: 1rem;" class="testr">Я создаю приложения, которые работают на разных платформах с использованием современных технологий</h1>
         <p style="text-align: center; font-size: 18.3px;">
-            Это идеальный способ реализовать ваши идеи в реальность. 
+            Это идеальный способ воплотить ваши идеи в реальность. 
         </p>
         <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap; margin-top: 1rem; margin-bottom: 1rem; ">
             <div style="width: 250px; flex-direction: column; align-items: center;
              display: flex;">
                 <img src="@/assets/img/progs/agile.png" class="img_progs" width="115px" alt="">
                 <h2>Гибкость</h2>
-                <p style="text-align: center; font-size: 18.3px;">Я работаю, с заказами разной степени сложности и срочности</p>
+                <p style="text-align: center; font-size: 18.3px;">Я работаю с заказами разной степени сложности и срочности</p>
             </div>
 
             <div style="width: 250px; flex-direction: column; align-items: center;
@@ -78,7 +81,7 @@
                     <div class="number_inside_circle">1</div>
                 </div>
                 <h2 style="text-align: center;">Индивидуальный подход</h2>
-                <p style="font-size: 18.3px;  text-align: center;">Все ваши требования и предпочтения учитываются, во время разработки уникальных решений под ваш проект.</p>
+                <p style="font-size: 18.3px;  text-align: center;">Все ваши требования и предпочтения учитываются во время разработки уникальных решений под ваш проект.</p>
             </div>
             <div style="width: 370px;">
                 <div class="circle_element">
@@ -155,7 +158,7 @@ import axios from 'axios';
             },
             async send_location(ref , time) {
                 
-            await axios.post('http://localhost:3000/send_location', {
+            await axios.post(`http://${process.env.VUE_APP_BACK_IP}:${process.env.VUE_APP_BACK_PORT}/send_location`, {
                 location: 'code_page',
                 referal: ref, 
                 time:time
@@ -163,6 +166,8 @@ import axios from 'axios';
         }
         },
         mounted(){
+            let el = this.$refs.nav
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             if(window.innerWidth<700)
                 this.img_src = require('@/assets/img/progs/cyber.jpg')
             else {

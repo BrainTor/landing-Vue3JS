@@ -14,7 +14,7 @@
         
 
         <div class="mobile_nav">
-            <h3 style="color: white; font-size: 22px;" @click.prevent="toggleDropdown"><fa icon ="compass"/></h3>
+            <h3 style="color: white; font-size: 22px; margin-top: 17px;" @click.prevent="toggleDropdown"><fa icon ="compass"/></h3>
             <ul v-if="isDropdownOpen" class="dropdown-menu">
                 <li @click="handle_change('_about')"><a href="#"><fa icon="circle-info" style="margin-right: 1px;"/> Обо мне</a></li>
                 <li @click="handle_change('_study')"><a href="#"><fa icon="book" /> Обучение</a></li>
@@ -47,8 +47,8 @@
             <button class="button_info button_contact" @click="handle_change('_contact')"><fa icon="address-book" /> Контакты</button>
         </div>
 
-        <div class="mobile_nav">
-            <h3 style="color: white; font-size: 22px;" @click.prevent="toggleDropdown"><fa icon="compass" /></h3>
+        <div class="mobile_nav" >
+            <h3 style="color: white; font-size: 22px; "  @click.prevent="toggleDropdown"><fa icon="compass" /></h3>
             <ul v-if="isDropdownOpen" class="dropdown-menu">
                 <router-link to="/">
                     <li><a href="#"><fa icon = "house"></fa> На главную</a></li>
@@ -184,8 +184,8 @@ export default {
   
   .dropdown-menu li {
     text-align: center;
-    margin-top: 10px;
-
+    margin-top: 15px;
+    margin-bottom: 15px;
     color: white;
   }
 
